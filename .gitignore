@@ -25,3 +25,7 @@ vite.config.ts.timestamp-*
 .vscode/
 
 bun.lock
+
+# Stream
+problem-statement.md
+overlay.html
