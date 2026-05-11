@@ -145,18 +145,30 @@ class KanbanStore {
 		if (!sourceColumn || !targetColumn) return;
 
 		if (sourceColumn.id === targetColumnId) {
-			// Same column move
 			const oldIndex = sourceColumn.cards.indexOf(cardId);
 			if (oldIndex === newIndex) return;
 
-			const newCards = [...sourceColumn.cards];
-			newCards.splice(oldIndex, 1);
-			newCards.splice(newIndex, 0, cardId);
-			sourceColumn.cards = newCards;
+			this.#columns = this.#columns.map((col) => {
+				if (col.id === targetColumnId) {
+					const newCards = [...col.cards];
+					newCards.splice(oldIndex, 1);
+					newCards.splice(newIndex, 0, cardId);
+					return { ...col, cards: newCards };
+				}
+				return col;
+			});
 		} else {
-			// Cross column move
-			sourceColumn.cards = sourceColumn.cards.filter((id) => id !== cardId);
-			targetColumn.cards.splice(newIndex, 0, cardId);
+			this.#columns = this.#columns.map((col) => {
+				if (col.id === sourceColumn.id) {
+					return { ...col, cards: col.cards.filter((id) => id !== cardId) };
+				}
+				if (col.id === targetColumnId) {
+					const newCards = [...col.cards];
+					newCards.splice(newIndex, 0, cardId);
+					return { ...col, cards: newCards };
+				}
+				return col;
+			});
 		}
 
 		this.saveToStorage();

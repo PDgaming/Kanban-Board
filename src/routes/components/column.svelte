@@ -63,32 +63,40 @@
 </script>
 
 <div
-	class="flex max-h-[70vh] md:max-h-full w-full flex-col rounded-xl bg-base-300 shadow-lg transition-all"
-	use:draggable={{ container: 'board', dragData: id }}
+	class="flex max-h-[70vh] w-full flex-col rounded-xl bg-base-300 shadow-lg transition-all md:max-h-full"
 	use:droppable={{
 		container: 'board',
 		callbacks: { onDrop: handleColumnDrop }
 	}}
 >
-	<div class="title flex items-center justify-between p-2 md:p-3">
-		<div class="flex items-center gap-1 md:gap-2 overflow-hidden">
-			<Icon icon="material-symbols:drag-indicator" class="h-4 w-4 md:h-5 md:w-5 cursor-grab opacity-30 active:cursor-grabbing" />
+	<div class="title flex items-center justify-between border-b border-base-content/10 p-2 md:p-3">
+		<div
+			class="flex items-center gap-1 overflow-hidden md:gap-2"
+			use:draggable={{ container: 'board', dragData: id }}
+		>
+			<Icon
+				icon="material-symbols:drag-indicator"
+				class="h-4 w-4 cursor-grab opacity-30 active:cursor-grabbing md:h-5 md:w-5"
+			/>
 			<span
-				class={`truncate text-lg md:text-xl font-bold ${status === 'todo' ? 'text-info' : status === 'in-progress' ? 'text-warning' : 'text-success'}`}
+				class={`truncate text-lg font-bold md:text-xl ${status === 'todo' ? 'text-info' : status === 'in-progress' ? 'text-warning' : 'text-success'}`}
 			>
 				{title}
 			</span>
 		</div>
 		<div class="flex gap-1">
-			<button class="btn btn-ghost btn-xs md:btn-sm p-1" onclick={() => addCardDialog?.showModal()}>
+			<button class="btn p-1 btn-ghost btn-xs md:btn-sm" onclick={() => addCardDialog?.showModal()}>
 				<Icon icon="ic:baseline-add" class="h-4 w-4 md:h-5 md:w-5" />
 			</button>
 			<div class="dropdown dropdown-end">
-				<button tabindex="0" class="btn btn-ghost btn-xs md:btn-sm p-1">
+				<button tabindex="0" class="btn p-1 btn-ghost btn-xs md:btn-sm">
 					<Icon icon="material-symbols:more-vert" class="h-4 w-4 md:h-5 md:w-5" />
 				</button>
 				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-				<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-48 md:w-52 p-2 shadow">
+				<ul
+					tabindex="0"
+					class="dropdown-content menu z-[1] w-48 rounded-box bg-base-100 p-2 shadow md:w-52"
+				>
 					<li>
 						<button onclick={() => editColumnDialog?.showModal()}>
 							<Icon icon="material-symbols:edit" /> Rename Column
@@ -105,7 +113,7 @@
 	</div>
 
 	<div
-		class="cards-container flex flex-1 flex-col gap-2 md:gap-3 overflow-y-auto rounded-b-xl bg-base-100 p-2 md:p-3"
+		class="cards-container flex flex-1 flex-col gap-2 overflow-y-auto rounded-b-xl bg-base-100 p-2 md:gap-3 md:p-3"
 		use:droppable={{
 			container: id,
 			callbacks: { onDrop: handleColumnDrop }
@@ -135,7 +143,7 @@
 				<input
 					type="text"
 					placeholder="Enter task title..."
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					bind:value={newCardTitle}
 				/>
 			</label>
@@ -144,7 +152,7 @@
 					<span class="label-text">Description</span>
 				</div>
 				<textarea
-					class="textarea textarea-bordered h-24 w-full"
+					class="textarea-bordered textarea h-24 w-full"
 					placeholder="Enter task description..."
 					bind:value={newCardDescription}
 				></textarea>
@@ -174,7 +182,7 @@
 				<input
 					type="text"
 					placeholder="Enter column title..."
-					class="input input-bordered w-full"
+					class="input-bordered input w-full"
 					bind:value={editColumnTitle}
 				/>
 			</label>
@@ -201,7 +209,9 @@
 		</p>
 		<div class="modal-action">
 			<form method="dialog">
-				<button class="btn btn-error" onclick={() => kanbanStore.deleteColumn(id)}>Delete Column</button>
+				<button class="btn btn-error" onclick={() => kanbanStore.deleteColumn(id)}
+					>Delete Column</button
+				>
 				<button class="btn">Cancel</button>
 			</form>
 		</div>

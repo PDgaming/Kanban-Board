@@ -2,3 +2,17 @@
 @plugin '../../node_modules/daisyui/index.js' {
 	themes: coffee;
 }
+
+:global(*:focus-visible) {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+:global(.svelte-dnd-action) {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+:global(::selection) {
+	background-color: oklch(var(--p) / 0.3);
+}
