@@ -21,8 +21,8 @@
 			const parsedCards = JSON.parse(cards);
 			const parsedColumns = JSON.parse(columns);
 
-			console.log(parsedCards);
-			console.log(parsedColumns);
+			// console.log(parsedCards);
+			// console.log(parsedColumns);
 
 			return { cards: parsedCards, columns: parsedColumns };
 		} catch (error) {
@@ -32,13 +32,12 @@
 	}
 	// Update stores with data from local storage
 	function updateStores(newCards: card[], newColumns: column[]) {
-		cards.value = [...newCards];
+		cards.value = [...cards.value, ...newCards];
+		localStorage.setItem('cards', JSON.stringify(cards.value));
 		columns.value = columns.value.map((column) => {
-			column.cards = cards.value.map((card) => {
-				if (card.status === column.status) {
-					return card.id;
-				}
-			});
+			column.cards = cards.value
+				.filter((card) => card.status === column.status)
+				.map((card) => card.id);
 
 			return column;
 		});

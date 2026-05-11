@@ -33,10 +33,6 @@
 		localStorage.setItem('cards', JSON.stringify(cards.value));
 		localStorage.setItem('columns', JSON.stringify(columns.value));
 	}
-
-	$effect(() => {
-		console.log(cardsList);
-	});
 </script>
 
 <div class="h-full w-full rounded-xl bg-base-300">
