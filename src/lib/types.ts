@@ -1,4 +1,4 @@
-type status = 'todo' | 'in-progress' | 'done';
+export type status = 'todo' | 'in-progress' | 'done';
 
 export interface card {
 	id: string; // Use UUIDs
